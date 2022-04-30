@@ -1,27 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View } from 'react-native';
 
 import Login from "./components/Login";
+import Subject from "./components/Subject";
 import React from "react";
+import {NativeRouter ,Switch, Route} from "react-router-native"
 
 
 
 export default class App extends React.Component {
-    render()
-    {
+    render() {
         return (
-          <View style={styles.container}>
-              <Login />
-
-          </View>
+            <NativeRouter>
+                <View style={styles.container}>
+                    <Switch>
+                        <Route exact path="/" component={Login} />
+                        <Route exact path="/Subjects" component={Subject} />
+                    </Switch>
+                </View>
+            </NativeRouter>
         );
     }
-
-
-    // <View style={styles.container}>
-    //   <Text>TADA</Text>
-    //   <StatusBar style="auto" />
-    // </View>
 }
 
 const styles = StyleSheet.create({

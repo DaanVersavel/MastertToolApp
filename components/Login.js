@@ -1,11 +1,9 @@
-import React from 'react';
-import {View,Text,Button} from 'react-native';
+import React from "react";
+import { View, Text, Button } from "react-native";
 
-export default () => (
+export default ({ history }) => (
     <View>
-    <Text> This is login screen</Text>
-    <Button title="press" onPress={() => 5} />
+        <Text>This is the home page</Text>
+        <Button title="change page" onPress={() => history.push("/Subjects")} />
     </View>
-
-
-)
+);
