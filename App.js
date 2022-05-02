@@ -2,7 +2,8 @@
 import {StyleSheet,Button, Text, View } from 'react-native';
 
 import Login from "./components/Login";
-import Subject from "./components/Subject";
+import Subject, {subject} from "./components/Subject";
+import Index from "./pages/index.jsx";
 import * as React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -35,9 +36,18 @@ const Drawer = createDrawerNavigator()
 function App() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator initialRouteName="Login">
+            <Drawer.Navigator initialRouteName="Login"
+                              screenOptions={{
+                headerStyle: {
+                    backgroundColor: '#7EC8E3',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}>
                 <Stack.Screen name="Login" component={HomeScreen}  />
-                <Stack.Screen name="Details" component={DetailsScreen} />
+                {/*<Stack.Screen name="Subject" component={Index} />*/}
             </Drawer.Navigator>
         </NavigationContainer>
     );

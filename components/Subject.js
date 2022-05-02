@@ -1,10 +1,23 @@
 import React from "react";
+import { StackNavigationProp } from '@react-navigation/stack';
 import { View, Text, Button } from "react-native";
+import {useCollapsibleHeader} from "react-navigation-collapsible";
 
-export default ({ history }) => (
+
+
+const subject = ({naviagtion}) =>{
+
+
+    return (
     <View>
         <Text>Product 1</Text>
         <Text>Product 2</Text>
-        <Button title="change page" onPress={() => history.push("/")} />
+
     </View>
-);
+    );
+
+
+}
+export {subject};
+
+
