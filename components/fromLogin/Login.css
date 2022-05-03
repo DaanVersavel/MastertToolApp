@@ -1,0 +1,19 @@
+.login-input {
+    display: block;
+    padding-left: 10px;
+    height: 40px;
+    width: 100%;
+}
+
+.logForm label, span {
+    color: #fff
+}
+
+.login-btn {
+    margin: 10px 0 10px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+}

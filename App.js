@@ -1,9 +1,7 @@
 
 import {StyleSheet,Button, Text, View } from 'react-native';
 
-import Login from "./components/Login";
-import Subject, {subject} from "./components/Subject";
-import Index from "./pages/index.jsx";
+
 import * as React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -50,6 +48,15 @@ function App() {
                 {/*<Stack.Screen name="Subject" component={Index} />*/}
             </Drawer.Navigator>
         </NavigationContainer>
+
+    //     <NavigationContainer>
+    //         <Drawer.Navigator>
+    //             <Stack.Screen name="Login" component={HomeScreen}/>
+    //             <Stack.Screen name="Subject" component={DetailsScreen} />
+    //
+    //         </Drawer.Navigator>
+    //
+    //     </NavigationContainer>
     );
 }
 
