@@ -1,76 +1,60 @@
 import React, {useState} from 'react';
-import {Button} from "react-bootstrap";
-import "./Login.css"
-//import axios from '../../api/axiosAfterLogin'
+import {Form} from "react-bootstrap";
+import {Button, View} from "react-native";
+import {TYPES} from "react-native-basic-form";
 
-const Login = ({setUser}) => {
+var axios = require('axios');
+var qs = require('qs');
+var data = qs.stringify({
+    'email': 'lotte@gmail.com',
+    'password': 'lotte123'
+});
+var config = {
+    method: 'post',
+    url: 'http://localhost:8080/login',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data : data
+};
+
+axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+
+
+const Login = () => {
     const [data, setData] = useState({
         email: '',
         password: ''
     })
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        console.log(data)
+    const fields = [
+        // {name: 'image', label: 'Profile Image', required: true, type: TYPES.Image},
+        {name: 'email', label: 'Email Address', required: true, type: TYPES.Email},
+        {name: 'password', label: 'Password', required: true, secure: true},
+    ];
 
-        // axios
-        //     .post("", {data})
-        //     .then((response) => {
-        //         console.log(response)
-        //         localStorage.setItem('token', response.data.token)
-        //         setUser(response.data.user)
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     });
-    }
-
-    const handleChange = e => {
-        const [id, value] = e.target.value;
-        setData({...data, [id]: value});
-    }
-
-    return(
+    return (
         <>
-            <form className={"logForm"} onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">
-                        Email:
-                    </label>
-                    <br/>
-                    <input
-                        className={"login-input"}
-                        placeholder={"Enter your email"}
-                        type={"email"}
-                        id={"email"}
-                        onChange={handleChange}
-                        value={data.email}
-                        required
-                    />
-                </div>
+            <View>
+                <Form
+                    title={"Register"} //this is the button title
+                    fields={fields}
+                    // initialData={initialData} //used in edit mode
+                    // onSubmit={onSubmit}
+                    // loading={loading}
+                    style={{}}/>
+            </View>
 
-                <div>
-                    <label htmlFor="pwd">
-                        Password:
-                    </label>
-                    <br/>
-                    <input
-                        className={"login-input"}
-                        placeholder={"Enter your password"}
-                        type={"password"}
-                        id={"pwd"}
-                        onChange={handleChange}
-                        value={data.password}
-                        required
-                    />
-                </div>
-
-                <Button className={"login-btn btn-block"}>Log in</Button>
-                <br/>
-                <span>Don't have an account yet? <a href='/SignUp'>Sign up!</a></span>
-            </form>
         </>
-    )
-};
+
+    );
+}
 
 export default Login;

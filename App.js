@@ -6,6 +6,7 @@ import * as React from "react";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from "./components/fromLogin/Login";
 
 function HomeScreen({ navigation }) {
     return (
@@ -45,7 +46,7 @@ function App() {
                 },
             }}>
                 <Stack.Screen name="Login" component={HomeScreen}  />
-                {/*<Stack.Screen name="Subject" component={Index} />*/}
+                {/*<Stack.Screen name="Subject" component={Login} />*/}
             </Drawer.Navigator>
         </NavigationContainer>
 
