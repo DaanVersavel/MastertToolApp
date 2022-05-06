@@ -1,13 +1,16 @@
-import {Text} from "react-native";
-import {View} from "react-native-web";
+import {Text, View} from "react-native";
 
 
 
-const SubjectScreen = () =>{
+function SubjectScreen() {
     return (
-        <View>
-            <Text>Subject screen</Text>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#C1E1C1'}}>
+            <Text>Home Screen</Text>
+            {/*<Button*/}
+            {/*    title="Go to Details"*/}
+            {/*    onPress={() => navigation.navigate('Details')}*/}
+            {/*/>*/}
         </View>
-    )
+    );
 }
 export default SubjectScreen

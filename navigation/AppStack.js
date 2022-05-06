@@ -24,7 +24,8 @@ const AppStack = () => {
             drawerContent={props => <CustomDrawer {...props} />}
             screenOptions={{
                 headerShown: true,
-                drawerActiveBackgroundColor: '#aa18ea',
+                headerStyle: {backgroundColor:'#54BCEB'},
+                drawerActiveBackgroundColor: '#54BCEB',
                 drawerActiveTintColor: '#fff',
                 drawerInactiveTintColor: '#333',
                 drawerLabelStyle: {
@@ -34,12 +35,14 @@ const AppStack = () => {
                 },
             }}>
             <Drawer.Screen
-                name="Welcome"
-                component={HomeScreen}
+                name="Home"
+                component={SubjectScreen}
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="home-outline" size={22} color={color} />
                     ),
+                    // title:"Home",
+                    headerTitle:"welcome"
                 }}
             />
             {/*<Drawer.Screen*/}
@@ -81,5 +84,6 @@ const AppStack = () => {
         </Drawer.Navigator>
     );
 };
+
 
 export default AppStack;

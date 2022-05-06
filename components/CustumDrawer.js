@@ -1,5 +1,6 @@
 
 import React from 'react';
+import axios from 'axios';
 import {
     View,
     Text,
@@ -11,7 +12,7 @@ import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
-import {FontAwesome5, Ionicons} from "@expo/vector-icons";
+import {Ionicons} from "@expo/vector-icons";
 
 
 
@@ -20,7 +21,7 @@ const CustomDrawer = props => {
         <View style={{flex: 1}}>
             <DrawerContentScrollView
                 {...props}
-                contentContainerStyle={{backgroundColor: '#7EC8E3'}}>
+                contentContainerStyle={{backgroundColor: '#54BCEB'}}>
                 <ImageBackground
                     source={require('../assets/img.png')}
                     style={{padding:40}}>
@@ -54,20 +55,20 @@ const CustomDrawer = props => {
                     <DrawerItemList {...props} />
                 </View>
             </DrawerContentScrollView>
-            <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-                <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Ionicons name="share-social-outline" size={22} />
-                        <Text
-                            style={{
-                                fontSize: 15,
-                                // fontFamily: 'Roboto-Medium',
-                                marginLeft: 5,
-                            }}>
-                            Tell a Friend
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={{padding: 10, borderTopWidth: 1, borderTopColor: '#ccc'}}>
+                {/*<TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>*/}
+                {/*    <View style={{flexDirection: 'row', alignItems: 'center'}}>*/}
+                {/*        <Ionicons name="share-social-outline" size={22} />*/}
+                {/*        <Text*/}
+                {/*            style={{*/}
+                {/*                fontSize: 15,*/}
+                {/*                // fontFamily: 'Roboto-Medium',*/}
+                {/*                marginLeft: 5,*/}
+                {/*            }}>*/}
+                {/*            Tell a Friend*/}
+                {/*        </Text>*/}
+                {/*    </View>*/}
+                {/*</TouchableOpacity>*/}
                 <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Ionicons name="exit-outline" size={22} />
