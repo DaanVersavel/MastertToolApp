@@ -1,8 +1,8 @@
 import {createDrawerNavigator} from "@react-navigation/drawer";
-import CustomDrawer from "../components/CustumDrawer";
-import SubjectScreen from '../pages/SubjectScreen';
+import CustomDrawer from "../CustumDrawer";
 import {Ionicons} from "@expo/vector-icons";
 import {View,Text} from "react-native";
+import SubjectScreen from "../../screens/SubjectScreen";
 
 
 const Drawer = createDrawerNavigator();
@@ -36,7 +36,7 @@ const AppStack = () => {
             }}>
             <Drawer.Screen
                 name="Home"
-                component={SubjectScreen}
+                component={HomeScreen}
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="home-outline" size={22} color={color} />
@@ -45,15 +45,15 @@ const AppStack = () => {
                     headerTitle:"welcome"
                 }}
             />
-            {/*<Drawer.Screen*/}
-            {/*    name="Profile"*/}
-            {/*    component={ProfileScreen}*/}
-            {/*    options={{*/}
-            {/*        drawerIcon: ({color}) => (*/}
-            {/*            <Ionicons name="person-outline" size={22} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
+            <Drawer.Screen
+                name="Subject"
+                component={SubjectScreen}
+                options={{
+                    drawerIcon: ({color}) => (
+                        <Ionicons name="list-outline" size={22} color={color} />
+                    ),
+                }}
+            />
             {/*<Drawer.Screen*/}
             {/*    name="Messages"*/}
             {/*    component={MessagesScreen}*/}

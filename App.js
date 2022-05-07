@@ -4,8 +4,8 @@ import {Button, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from "react";
 import {NavigationContainer} from '@react-navigation/native';
-import AppStack from "./navigation/AppStack";
-import AuthStack from "./navigation/AuthStack";
+import AppStack from "./src/components/navigation/AppStack";
+import AuthStack from "./src/components/navigation/AuthStack";
 
 
 
@@ -42,11 +42,13 @@ function App() {
             {AsyncStorage.getItem("access_token") ==="true" ? (
 
                 //if acces token is null so not sigend in
-                    <AppStack/>//groen
-            ): (
+                //<AppStack/>//groen
+                 <AuthStack/>//wit
+
+                ): (
                 //user
-                <AuthStack/>//wit
-                // <AppStack />
+                //<AuthStack/>//wit
+                  <AppStack />
 
             )}
 
