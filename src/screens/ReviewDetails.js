@@ -6,7 +6,8 @@ function ReviewDetails({navigation}){
     return(
       <View>
           <Card>
-              <Text> {navigation.getParam("")}</Text>
+              <Text> {navigation.title}</Text>
+              <Text> {navigation.description}</Text>
 
           </Card>
       </View>
