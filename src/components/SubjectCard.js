@@ -7,7 +7,6 @@ function SubjectCard(props){
        <View style={styles.card}>
            <View style={styles.cardContent}>
                {props.children}
-
            </View>
        </View>
 
@@ -16,21 +15,26 @@ function SubjectCard(props){
 }
 const styles = StyleSheet.create({
     card: {
-        borderRadius: 8,
+        borderRadius: 25,
         elevation:3,
-        backgroundColor: "#fff",
+        backgroundColor: "#a9e5ff",
         shadowOffset:{width:1,height:1},
         shadowColor: "#3330",
         shadowOpacity: 0.3,
         shadowRadius:2,
-        marginHorizontal:4,
-        marginVertical:6
+        marginHorizontal:20,
+        marginVertical:10,
+        //borderColor: "#a6a6a6",
+        //borderWidth: 3
+        marginBottom:10
     },
     cardContent: {
-        marginHorizontal:18,
-        marginVertical:20
+        marginTop:10,
+        marginLeft:15,
+        marginRight:15,
+        marginBottom:5
+    },
 
-    }
 })
 
 export default SubjectCard;

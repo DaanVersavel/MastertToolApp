@@ -9,10 +9,9 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 
 
-function SubjectScreen({navigation}) {
+function StarredScreen({navigation}) {
     const [loading, setLoading] = useState(true);
     const [subjects, setSubjects] = useState([]);
-    const [allSubjects, setAllSubjects] = useState([]);
 
 
 
@@ -21,7 +20,7 @@ function SubjectScreen({navigation}) {
         const fetchSubjects = async () => {
             var config = {
                 method: 'get',
-                url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
+                url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
                 headers: {
                     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI0NjkwMTZ9.NDHzbqywknisXvHcIaPEfOmd9lfPfrhX04lsnVBqcTQ'
                 }
@@ -31,7 +30,6 @@ function SubjectScreen({navigation}) {
             try {
                 const {data: response} = await axios(config);
                 setSubjects(response);
-                setAllSubjects(response);
             } catch (error) {
                 console.error(error.message);
             }
@@ -49,15 +47,15 @@ function SubjectScreen({navigation}) {
     const renderItem = ({item}) => {
 
         return (
-            <TouchableOpacity onPress={() =>navigation.navigate('ReviewDetails',item)}>
+            <TouchableOpacity onPress={() =>navigation.navigate('ReviewDetails',item)} style={{alignItems:"center"}}>
                 <Card>
-                <Text style={styles.title}> {item.title}</Text>
-                <View>
+                    <Text style={styles.title}> {item.title}</Text>
+                    <View>
 
-                <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
-                </View>
+                        <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
+                    </View>
 
-                <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
+                    <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
                     <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
                     <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
 
@@ -84,15 +82,29 @@ function SubjectScreen({navigation}) {
         icons:{
             paddingBottom:1,
             paddingRight: 1,
+        },
+        titlePage:{
+            marginTop:10,
+            fontWeight: "bold",
+            fontSize: 25,
+            marginLeft:15,
+            alignItems:"flex-start",
+            borderBottomColor:"#100f0f",
+            borderBottomWidth:1,
+            borderEndWidth:50,
+            marginBottom:10
         }
 
     })
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#fff'}}>
+
+
+        <View style={{ flex: 1, /*alignItems: 'center',justifyContent: 'center',*/ backgroundColor:'#fff'}}>
+            <Text style={styles.titlePage}>You're starred subjects </Text>
             <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
             />
         </View>
     );
 }
-export default SubjectScreen
+export default StarredScreen

@@ -6,6 +6,7 @@ import * as React from "react";
 import {NavigationContainer} from '@react-navigation/native';
 import AppStack from "./src/components/navigation/AppStack";
 import AuthStack from "./src/components/navigation/AuthStack";
+// import {useState} from "@types/react-native";
 
 
 
@@ -35,7 +36,7 @@ import AuthStack from "./src/components/navigation/AuthStack";
 
 
 function App() {
-    AsyncStorage.setItem("access_token","false")
+     // const [signedIn, setsignedIn] = true;
 
     return (
         <NavigationContainer>

@@ -6,10 +6,10 @@ import CustomButton from "../components/CustomButton";
 
 function LoginScreen ({navigation}) {
 
-    const [email, onChangeEmail] = React.useState("Useless Text");
-    const [password, onChangePassword] = React.useState("Useless Text");
+    // const [email, onChangeEmail] = React.useState("Useless Text");
+    // const [password, onChangePassword] = React.useState("Useless Text");
     return (
-        <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+        <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor:'#ffffff'}}>
             <View style={{paddingHorizontal: 25}}>
                 {/*<View style={{alignItems: 'center'}}>*/}
                 {/*    <LoginSVG*/}

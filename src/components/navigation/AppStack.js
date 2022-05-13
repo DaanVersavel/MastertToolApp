@@ -3,12 +3,13 @@ import CustomDrawer from "../CustumDrawer";
 import {Ionicons} from "@expo/vector-icons";
 import {View,Text} from "react-native";
 import SubjectScreen from "../../screens/SubjectScreen";
+import StarredScreen from "../../screens/StarredScreen";
 
 
 const Drawer = createDrawerNavigator();
 function HomeScreen() {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#C1E1C1'}}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff'}}>
             <Text>Home Screen</Text>
             {/*<Button*/}
             {/*    title="Go to Details"*/}
@@ -46,7 +47,7 @@ const AppStack = () => {
                 }}
             />
             <Drawer.Screen
-                name="Subject"
+                name="Subjects"
                 component={SubjectScreen}
                 options={{
                     drawerIcon: ({color}) => (
@@ -54,15 +55,15 @@ const AppStack = () => {
                     ),
                 }}
             />
-            {/*<Drawer.Screen*/}
-            {/*    name="Messages"*/}
-            {/*    component={MessagesScreen}*/}
-            {/*    options={{*/}
-            {/*        drawerIcon: ({color}) => (*/}
-            {/*            <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
+            <Drawer.Screen
+                name="Starred"
+                component={StarredScreen}
+                options={{
+                    drawerIcon: ({color}) => (
+                        <Ionicons name="bookmarks-outline" size={22} color={color} />
+                    ),
+                }}
+            />
             {/*<Drawer.Screen*/}
             {/*    name="Moments"*/}
             {/*    component={MomentsScreen}*/}

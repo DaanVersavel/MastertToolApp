@@ -4,10 +4,10 @@ import {Text, View} from "react-native";
 
 function ReviewDetails({navigation}){
     return(
-      <View>
+      <View style={{backgroundColor:'#ffffff'}}>
           <Card>
-              <Text> {navigation.title}</Text>
-              <Text> {navigation.description}</Text>
+              {/*<Text> {navigation.title}</Text>*/}
+              {/*<Text> {navigation.description}</Text>*/}
 
           </Card>
       </View>

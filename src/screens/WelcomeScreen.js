@@ -4,7 +4,7 @@ import CustomButton from "../components/CustomButton";
 
 function WelcomeScreen({ navigation }) {
     return (
-        <View  style={{flex: 1, justifyContent: 'center'}} >
+        <View  style={{flex: 1, justifyContent: 'center',backgroundColor:'#ffffff'}} >
             <Text>Home Screen</Text>
                     <CustomButton
                         label={"Login"}
