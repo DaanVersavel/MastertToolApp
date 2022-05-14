@@ -1,9 +1,10 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Animated, FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Card from "../components/SubjectCard"
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import ReviewDetails from "./ReviewDetails";
 
 
 const Stack = createNativeStackNavigator();
@@ -22,7 +23,7 @@ function StarredScreen({navigation}) {
                 method: 'get',
                 url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
                 headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI0NjkwMTZ9.NDHzbqywknisXvHcIaPEfOmd9lfPfrhX04lsnVBqcTQ'
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
                 }
             };
 
@@ -39,31 +40,61 @@ function StarredScreen({navigation}) {
 
     }, [])
 
-    const Item = ({title}) => (
-        <View>
-            <Text>{title}</Text>
-        </View>
-    );
+    async function putStarred (subjectid)  {
+        var config = {
+            method: 'put',
+            url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredRemove/${subjectid}`,
+            headers: {
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
+            }
+        };
+
+        setLoading(true);
+        try {
+            const {data: response} = await axios(config);
+            setSubjects(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+    }
+
+    function  RightActions (subjectid){
+        return (
+            <TouchableOpacity style={styles.touchable} onPress={() =>putStarred(subjectid)}>
+                <View style={styles.rightActions}>
+                    <Animated.Text style={styles.actionText}> add to starred</Animated.Text>
+                </View>
+            </TouchableOpacity>
+        )
+
+    }
     const renderItem = ({item}) => {
 
         return (
-            <TouchableOpacity onPress={() =>navigation.navigate('ReviewDetails',item)} style={{alignItems:"center"}}>
-                <Card>
-                    <Text style={styles.title}> {item.title}</Text>
-                    <View>
+            <Swipeable
+                overshootRight={false}
+                renderRightActions={()=>RightActions(item.id)}
+            >
+                <TouchableOpacity onPress={() =>navigation.navigate(ReviewDetails, {item})} style={{alignItems:"center"}}>
+                    <Card>
+                        <Text style={styles.title}> {item.title}</Text>
+                        <View>
 
-                        <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
-                    </View>
+                            <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
+                        </View>
 
-                    <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
-                    <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
-                    <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
+                        <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
+                        <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
+                        <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
 
 
-                </Card>
-            </TouchableOpacity>
+                    </Card>
+                </TouchableOpacity>
+            </Swipeable>
 
-        )
+
+    )
     };
 
     const styles = StyleSheet.create({
@@ -101,7 +132,7 @@ function StarredScreen({navigation}) {
 
 
         <View style={{ flex: 1, /*alignItems: 'center',justifyContent: 'center',*/ backgroundColor:'#fff'}}>
-            <Text style={styles.titlePage}>You're starred subjects </Text>
+            <Text style={styles.titlePage}>Your starred subjects </Text>
             <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
             />
         </View>

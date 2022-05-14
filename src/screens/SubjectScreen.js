@@ -1,10 +1,11 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, StyleSheet, Text, TouchableOpacity, View, Animated} from "react-native";
 import Card from "../components/SubjectCard"
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Ionicons, MaterialIcons } from "@expo/vector-icons";
+import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-
+import {Swipeable} from "react-native-gesture-handler";
+// const { Swipeable } = GestureHandler;
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,9 @@ const Stack = createNativeStackNavigator();
 function SubjectScreen({navigation}) {
     const [loading, setLoading] = useState(true);
     const [subjects, setSubjects] = useState([]);
-    const [allSubjects, setAllSubjects] = useState([]);
+
+
+
 
 
 
@@ -23,7 +26,7 @@ function SubjectScreen({navigation}) {
                 method: 'get',
                 url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
                 headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI0NjkwMTZ9.NDHzbqywknisXvHcIaPEfOmd9lfPfrhX04lsnVBqcTQ'
+                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
                 }
             };
 
@@ -31,7 +34,6 @@ function SubjectScreen({navigation}) {
             try {
                 const {data: response} = await axios(config);
                 setSubjects(response);
-                setAllSubjects(response);
             } catch (error) {
                 console.error(error.message);
             }
@@ -41,30 +43,71 @@ function SubjectScreen({navigation}) {
 
     }, [])
 
+    async function putStarred (subjectid)  {
+        // console.log(subjectid)
+        var config = {
+            method: 'put',
+            url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredSave/${subjectid}`,
+            headers: {
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
+            }
+        };
+
+        setLoading(true);
+        try {
+            const {data: response} = await axios(config);
+            setSubjects(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+    }
+
     const Item = ({title}) => (
         <View>
             <Text>{title}</Text>
         </View>
     );
-    const renderItem = ({item}) => {
+    // const RightActions = ({subjectid}) =>{
+    function  RightActions (subjectid){
+        // const scale = dragX.interpolate({
+        //     inputRange:[-100,0],
+        //     outputRange: [1,0]
+        //
+        // })
 
         return (
-            <TouchableOpacity onPress={() =>navigation.navigate('ReviewDetails',item)}>
-                <Card>
-                <Text style={styles.title}> {item.title}</Text>
-                <View>
-
-                <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
+            <TouchableOpacity style={styles.touchable} onPress={() =>putStarred(subjectid)}>
+                <View style={styles.rightActions}>
+                    <Animated.Text style={styles.actionText}> add to starred</Animated.Text>
                 </View>
-
-                <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
-                    <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
-                    <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
-
-
-                </Card>
             </TouchableOpacity>
+        )
 
+    }
+    const renderItem = ({item }) => {
+
+        return (
+            <Swipeable
+                overshootRight={false}
+            renderRightActions={()=>RightActions(item.id)}
+            >
+                <TouchableOpacity activeOpacity={1} onPress={() =>navigation.navigate('ReviewDetails',{itemId :item.id})}>
+                    <Card>
+
+                        <Text style={styles.title}> {item.title}</Text>
+                        <View>
+
+                        <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
+                        </View>
+
+                        <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
+                        <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
+                        <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
+
+                    </Card>
+                </TouchableOpacity>
+            </Swipeable>
         )
     };
 
@@ -84,13 +127,39 @@ function SubjectScreen({navigation}) {
         icons:{
             paddingBottom:1,
             paddingRight: 1,
+        },
+        rightActions:{
+            backgroundColor :"#f8f8b8",
+            justifyContent: "center",
+            flex:1,
+            marginTop:10,
+            marginBottom:10,
+            marginLeft:10,
+            // alignItems: "flex-end"
+        },
+        actionText:{
+            color: "#000000",
+            fontSize:20,
+            // marginLeft:100,
+            // marginRight:50
+            textAlign:'right',
+            paddingRight:10,
+            paddingLeft:30
+
+        },
+        touchable:{
+            // padding:20,
+            marginLeft:-45,
+            // flex:1,
+            // marginLeft:150
+
         }
 
     })
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#fff'}}>
-            <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
+            <FlatList data={subjects} renderItem={renderItem} keyExtractor={(item) => item.id}
             />
         </View>
     );

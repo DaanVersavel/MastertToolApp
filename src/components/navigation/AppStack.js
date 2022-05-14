@@ -4,6 +4,9 @@ import {Ionicons} from "@expo/vector-icons";
 import {View,Text} from "react-native";
 import SubjectScreen from "../../screens/SubjectScreen";
 import StarredScreen from "../../screens/StarredScreen";
+import subjectnavigator from "../../screens/SubjectNavigator";
+import ReviewDetails from "../../screens/ReviewDetails";
+import SubjectNavigator from "../../screens/SubjectNavigator";
 
 
 const Drawer = createDrawerNavigator();
@@ -64,18 +67,19 @@ const AppStack = () => {
                     ),
                 }}
             />
+            <Drawer.Screen
+                name="SubjectNaviagtor"
+                component={SubjectNavigator}
+                options={{
+                    drawerIcon: ({color}) => (
+                        <Ionicons name="timer-outline" size={22} color={color} />
+                    ),
+                }}
+            />
             {/*<Drawer.Screen*/}
-            {/*    name="Moments"*/}
-            {/*    component={MomentsScreen}*/}
-            {/*    options={{*/}
-            {/*        drawerIcon: ({color}) => (*/}
-            {/*            <Ionicons name="timer-outline" size={22} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
-            {/*<Drawer.Screen*/}
-            {/*    name="Settings"*/}
-            {/*    component={SettingsScreen}*/}
+            {/*    name="Details"*/}
+            {/*    component={ReviewDetails}*/}
+
             {/*    options={{*/}
             {/*        drawerIcon: ({color}) => (*/}
             {/*            <Ionicons name="settings-outline" size={22} color={color} />*/}
