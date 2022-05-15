@@ -1,13 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native'
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import InputField from "../components/InputField";
 import CustomButton from "../components/CustomButton";
+import axios from "axios";
+import qs, {stringify} from "qs";
+import SecureStorage from 'react-native-secure-storage'
+
 
 function LoginScreen ({navigation}) {
 
-    // const [email, onChangeEmail] = React.useState("Useless Text");
-    // const [password, onChangePassword] = React.useState("Useless Text");
+    const [email, setEmail] = useState('lotte@gmail.com');
+    const [password, setPassword] = useState('lotte123');
+
+    var data = qs.stringify({email, password});
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        console.log("email",email)
+        console.log("password",password)
+        console.log(data)
+        var config = {
+            method: 'post',
+            // url: 'https://masterprooftoolbackend.herokuapp.com/login',
+            url: 'http://localhost:8080/login',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : data
+        };
+
+        axios(config)
+            .then((response) => {
+                console.log(response)
+                SecureStorage.setItem('access_token', response.data['access_token'])
+                sessionStorage.setItem('refresh_token', response.data['refresh_token'])
+                // navigate(redirectPath, {replace: true})
+                window.location.reload()
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+    // const handleChange = e => {
+    //     const {id, value} = e.target;
+    //     setlogininfo({...data, [id]: value});
+    // }
+
     return (
         <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor:'#ffffff'}}>
             <View style={{paddingHorizontal: 25}}>
@@ -31,7 +70,7 @@ function LoginScreen ({navigation}) {
                 </Text>
 
                 <InputField
-                    label={'Email ID'}
+                    label={'Email'}
                     icon={
                         <MaterialIcons
                             name="alternate-email"
@@ -40,10 +79,11 @@ function LoginScreen ({navigation}) {
                             style={{marginRight: 5}}
                         />
                     }
+                    // value={email}
+                    onChange={(val) => setEmail(val)}
+
                     keyboardType="email-address"
                 />
-
-
 
                 <InputField
                     label={'Password'}
@@ -56,11 +96,12 @@ function LoginScreen ({navigation}) {
                         />
                     }
                     inputType="password"
-                    // fieldButtonLabel={"plop?"}
-                    fieldButtonFunction={() => {}}
+                    // value={password}
+                    onChange={(val) => setPassword(val)}
+                    // fieldButtonFunction={() => {}}
                 />
 
-                <CustomButton label={"Login"} onPress={() => {}} />
+                <CustomButton label={"Login"} onPress={handleSubmit} />
 
                 {/*<Text style={{textAlign: 'center', color: '#666', marginBottom: 30}}>*/}
                 {/*    Or, login with ...*/}

@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {Swipeable} from "react-native-gesture-handler";
-// const { Swipeable } = GestureHandler;
+import {Screen} from "react-native-screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,37 +19,36 @@ function SubjectScreen({navigation}) {
 
 
 
-    useEffect(() => {
+     useEffect(/*() => {*/
+        fetchSubjectsagain)
+        // const fetchSubjects = async () => {
+        //     var config = {
+        //         method: 'get',
+        //         url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
+        //         headers: {
+        //             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2MzA2MzF9.amu0Y2LcMxUxLiSdPXQO7h60dwoAUaQ-P-q5VE6lrm8'
+        //         }
+        //     };
+        //
+        //     setLoading(true);
+        //     try {
+        //         const {data: response} = await axios(config);
+        //         setSubjects(response);
+        //     } catch (error) {
+        //         console.error(error.message);
+        //     }
+        //     setLoading(false);
+        // }
+        // fetchSubjects()
 
-        const fetchSubjects = async () => {
-            var config = {
-                method: 'get',
-                url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
-                headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
-                }
-            };
+     ////, [])
 
-            setLoading(true);
-            try {
-                const {data: response} = await axios(config);
-                setSubjects(response);
-            } catch (error) {
-                console.error(error.message);
-            }
-            setLoading(false);
-        }
-        fetchSubjects()
-
-    }, [])
-
-    async function putStarred (subjectid)  {
-        // console.log(subjectid)
+     async function fetchSubjectsagain() {
         var config = {
-            method: 'put',
-            url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredSave/${subjectid}`,
+            method: 'get',
+            url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2MzA2MzF9.amu0Y2LcMxUxLiSdPXQO7h60dwoAUaQ-P-q5VE6lrm8'
             }
         };
 
@@ -63,12 +62,31 @@ function SubjectScreen({navigation}) {
         setLoading(false);
     }
 
-    const Item = ({title}) => (
-        <View>
-            <Text>{title}</Text>
-        </View>
-    );
-    // const RightActions = ({subjectid}) =>{
+
+
+    async function putStarred (subjectid)  {
+        // console.log(subjectid)
+        var config = {
+            method: 'put',
+            url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredSave/${subjectid}`,
+            headers: {
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2MzA2MzF9.amu0Y2LcMxUxLiSdPXQO7h60dwoAUaQ-P-q5VE6lrm8'
+            }
+        };
+
+        setLoading(true);
+        try {
+            const {data: response} = await axios(config);
+            setSubjects(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+        await fetchSubjectsagain();
+
+    }
+
+
     function  RightActions (subjectid){
         // const scale = dragX.interpolate({
         //     inputRange:[-100,0],
@@ -101,7 +119,7 @@ function SubjectScreen({navigation}) {
                         <Text style={styles.description}><MaterialIcons name="description" size={20} style={styles.icons}/>  {item.description}</Text>
                         </View>
 
-                        <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
+                        {/*<Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>*/}
                         <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
                         <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
 
@@ -138,8 +156,9 @@ function SubjectScreen({navigation}) {
             // alignItems: "flex-end"
         },
         actionText:{
+            fontWeight: "bold",
             color: "#000000",
-            fontSize:20,
+            fontSize:23,
             // marginLeft:100,
             // marginRight:50
             textAlign:'right',
@@ -149,7 +168,7 @@ function SubjectScreen({navigation}) {
         },
         touchable:{
             // padding:20,
-            marginLeft:-45,
+            marginLeft:-50,
             // flex:1,
             // marginLeft:150
 

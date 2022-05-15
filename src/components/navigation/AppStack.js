@@ -4,9 +4,10 @@ import {Ionicons} from "@expo/vector-icons";
 import {View,Text} from "react-native";
 import SubjectScreen from "../../screens/SubjectScreen";
 import StarredScreen from "../../screens/StarredScreen";
-import subjectnavigator from "../../screens/SubjectNavigator";
+import subjectnavigator from "./SubjectNavigator";
 import ReviewDetails from "../../screens/ReviewDetails";
-import SubjectNavigator from "../../screens/SubjectNavigator";
+import SubjectNavigator from "../navigation/SubjectNavigator";
+import StarredNavigator from "../navigation/StarredNavigator";
 
 
 const Drawer = createDrawerNavigator();
@@ -51,7 +52,7 @@ const AppStack = () => {
             />
             <Drawer.Screen
                 name="Subjects"
-                component={SubjectScreen}
+                component={SubjectNavigator}
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="list-outline" size={22} color={color} />
@@ -60,22 +61,22 @@ const AppStack = () => {
             />
             <Drawer.Screen
                 name="Starred"
-                component={StarredScreen}
+                component={StarredNavigator}
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="bookmarks-outline" size={22} color={color} />
                     ),
                 }}
             />
-            <Drawer.Screen
-                name="SubjectNaviagtor"
-                component={SubjectNavigator}
-                options={{
-                    drawerIcon: ({color}) => (
-                        <Ionicons name="timer-outline" size={22} color={color} />
-                    ),
-                }}
-            />
+            {/*<Drawer.Screen*/}
+            {/*    name="StarredNavigator"*/}
+            {/*    component={StarredNavigator}*/}
+            {/*    options={{*/}
+            {/*        drawerIcon: ({color}) => (*/}
+            {/*            <Ionicons name="timer-outline" size={22} color={color} />*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*/>*/}
             {/*<Drawer.Screen*/}
             {/*    name="Details"*/}
             {/*    component={ReviewDetails}*/}

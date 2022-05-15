@@ -3,11 +3,16 @@ import Card from "../components/SubjectCard"
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons } from "@expo/vector-icons";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import ReviewDetails from "./ReviewDetails";
+import {Swipeable} from "react-native-gesture-handler";
+import async from "async";
+// import SecureStorage from "react-native-secure-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+import {stringify} from "qs";
+import * as SecureStore from 'expo-secure-store';
 
 
-const Stack = createNativeStackNavigator();
+// SecureStore.setItemAsync("accesstoken",JSON.stringify( "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM"))
 
 
 function StarredScreen({navigation}) {
@@ -16,14 +21,16 @@ function StarredScreen({navigation}) {
 
 
 
+
     useEffect(() => {
+        console.log(SecureStore.getItemAsync("accesstoken"))
 
         const fetchSubjects = async () => {
             var config = {
                 method: 'get',
                 url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
                 headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
+                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
                 }
             };
 
@@ -40,12 +47,12 @@ function StarredScreen({navigation}) {
 
     }, [])
 
-    async function putStarred (subjectid)  {
+    async function fetchSubjectsagain() {
         var config = {
-            method: 'put',
-            url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredRemove/${subjectid}`,
+            method: 'get',
+            url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI1NjE1NzR9.QNUnQu77ftIEwj55DefzSpJ4sIEa4pSiNuuNP7rZD_I'
+                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
             }
         };
 
@@ -59,11 +66,34 @@ function StarredScreen({navigation}) {
         setLoading(false);
     }
 
+
+
+
+    async function removeStarred (subjectid)  {
+        var config = {
+            method: 'put',
+            url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredRemove/${subjectid}`,
+            headers: {
+                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
+            }
+        };
+
+        setLoading(true);
+        try {
+            const {data: response} = await axios(config);
+            setSubjects(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+        await fetchSubjectsagain();
+    }
+
     function  RightActions (subjectid){
         return (
-            <TouchableOpacity style={styles.touchable} onPress={() =>putStarred(subjectid)}>
+            <TouchableOpacity style={styles.touchable} onPress={() =>removeStarred(subjectid)}>
                 <View style={styles.rightActions}>
-                    <Animated.Text style={styles.actionText}> add to starred</Animated.Text>
+                    <Animated.Text style={styles.actionText}> Remove starred</Animated.Text>
                 </View>
             </TouchableOpacity>
         )
@@ -76,7 +106,7 @@ function StarredScreen({navigation}) {
                 overshootRight={false}
                 renderRightActions={()=>RightActions(item.id)}
             >
-                <TouchableOpacity onPress={() =>navigation.navigate(ReviewDetails, {item})} style={{alignItems:"center"}}>
+                <TouchableOpacity activeOpacity={1} onPress={() =>navigation.navigate('ReviewDetails',{itemId :item.id})}>
                     <Card>
                         <Text style={styles.title}> {item.title}</Text>
                         <View>
@@ -124,7 +154,31 @@ function StarredScreen({navigation}) {
             borderBottomWidth:1,
             borderEndWidth:50,
             marginBottom:10
-        }
+        },
+        touchable:{
+            marginLeft:-70,
+
+        },
+        actionText:{
+            fontWeight: "bold",
+            color: "#000000",
+            fontSize:23,
+            // marginLeft:100,
+            // marginRight:50
+            textAlign:'right',
+            paddingRight:10,
+            paddingLeft:45
+
+        },
+        rightActions:{
+            backgroundColor :"#ef3e35",
+            justifyContent: "center",
+            flex:1,
+            marginTop:10,
+            marginBottom:10,
+            marginLeft:10,
+            // alignItems: "flex-end"
+        },
 
     })
 

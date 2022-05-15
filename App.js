@@ -6,7 +6,8 @@ import * as React from "react";
 import {NavigationContainer} from '@react-navigation/native';
 import AppStack from "./src/components/navigation/AppStack";
 import AuthStack from "./src/components/navigation/AuthStack";
-// import {useState} from "@types/react-native";
+import {useEffect, useState} from "react";
+
 
 
 
@@ -36,20 +37,19 @@ import AuthStack from "./src/components/navigation/AuthStack";
 
 
 function App() {
-     // const [signedIn, setsignedIn] = true;
+     const [signedIn, setsignedIn] = useState(false);
 
     return (
         <NavigationContainer>
-            {AsyncStorage.getItem("access_token") ==="true" ? (
-
-                //if acces token is null so not sigend in
-                //<AppStack/>//groen
-                 <AuthStack/>//wit
+            {signedIn ? (
+                //if  sigend in render
+                <AppStack/>
+                // <AuthStack/>
 
                 ): (
                 //user
-                //<AuthStack/>//wit
-                  <AppStack />
+                <AuthStack/>//wit
+                 // <AppStack />
 
             )}
 
@@ -58,31 +58,7 @@ function App() {
 }
 
 
-// const Stack = createNativeStackNavigator();
-// const Drawer = createDrawerNavigator()
-//
-//
-// function App() {
-//     return (
-//         <NavigationContainer>
-//             <Drawer.Navigator >
-//                 <Stack.Screen name="Login" component={HomeScreen}  />
-//                 {/*<Stack.Screen name="Subject" component={Login} />*/}
-//             </Drawer.Navigator>
-//         </NavigationContainer>
-//
-//     //     <NavigationContainer>
-//     //         <Drawer.Navigator>
-//     //             <Stack.Screen name="Login" component={HomeScreen}/>
-//     //             <Stack.Screen name="Subject" component={DetailsScreen} />
-//     //
-//     //         </Drawer.Navigator>
-//     //
-//     //     </NavigationContainer>
-//     );
-// }
-//
-//
+
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,

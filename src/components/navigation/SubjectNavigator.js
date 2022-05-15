@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import ReviewDetails from "./ReviewDetails";
-import SubjectScreen from "./SubjectScreen";
+import ReviewDetails from "../../screens/ReviewDetails";
+import SubjectScreen from "../../screens/SubjectScreen";
 
 
 const Stack = createNativeStackNavigator();
