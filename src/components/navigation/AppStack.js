@@ -58,24 +58,15 @@ const AppStack = (navigation) => {
 
 
             <Drawer.Screen
-                name="LogoutScreen"
+                name="Logout"
                 component={LogoutScreen}
                 options={{
                     drawerIcon: ({color}) => (
-                        <Ionicons name="timer-outline" size={22} color={color} />
+                        <Ionicons name="exit-outline" size={22} color={color} />
                     ),
                 }}
             />
-            {/*<Drawer.Screen*/}
-            {/*    name="Details"*/}
-            {/*    component={ReviewDetails}*/}
 
-            {/*    options={{*/}
-            {/*        drawerIcon: ({color}) => (*/}
-            {/*            <Ionicons name="settings-outline" size={22} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
         </Drawer.Navigator>
     );
 };

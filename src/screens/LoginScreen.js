@@ -18,10 +18,6 @@ function LoginScreen ({navigation}) {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log("next")
-        console.log("email",email)
-        console.log("password",password)
-        console.log(data)
         var config = {
             method: 'post',
             url: 'https://masterprooftoolbackend.herokuapp.com/login',

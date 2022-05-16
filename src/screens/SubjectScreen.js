@@ -5,10 +5,7 @@ import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {Swipeable} from "react-native-gesture-handler";
-import {Screen} from "react-native-screens";
 import * as SecureStore from "expo-secure-store";
-
-const Stack = createNativeStackNavigator();
 
 
 function SubjectScreen({navigation}) {
@@ -20,8 +17,30 @@ function SubjectScreen({navigation}) {
 
 
 
-     useEffect(fetchSubjectsagain)
+    useEffect(() => {
 
+        const fetchSubjects = async () => {
+            let token = await SecureStore.getItemAsync('access_token');
+            var config = {
+                method: 'get',
+                url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+
+            setLoading(true);
+            try {
+                const {data: response} = await axios(config);
+                setSubjects(response);
+            } catch (error) {
+                console.error(error.message);
+            }
+            setLoading(false);
+        }
+        fetchSubjects()
+
+    }, [])
 
      async function fetchSubjectsagain() {
          let token = await SecureStore.getItemAsync('access_token');

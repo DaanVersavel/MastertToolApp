@@ -1,6 +1,5 @@
-import {Button, SafeAreaView, Text, View} from "react-native";
+import { Text, View} from "react-native";
 import CustomButton from "../components/CustomButton";
-import {useEffect} from "react";
 
 
 function LogoutScreen({ navigation }) {

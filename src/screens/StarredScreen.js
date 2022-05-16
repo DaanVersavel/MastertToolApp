@@ -4,9 +4,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons } from "@expo/vector-icons";
 import {Swipeable} from "react-native-gesture-handler";
-import async from "async";
 
-import {stringify} from "qs";
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -17,8 +15,30 @@ function StarredScreen({navigation}) {
     const [subjects, setSubjects] = useState([]);
 
 
+    useEffect(() => {
 
-    useEffect(fetchSubjectsagain)
+    const fetchSubjects = async () => {
+        let token = await SecureStore.getItemAsync('access_token');
+        var config = {
+            method: 'get',
+            url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        setLoading(true);
+        try {
+            const {data: response} = await axios(config);
+            setSubjects(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+    }
+    fetchSubjects()
+
+    }, [])
 
 
 
@@ -110,9 +130,7 @@ function StarredScreen({navigation}) {
             marginBottom:10
         },
         description:{
-            //fontWeight: "bold",
             fontSize: 17,
-            // paddingBottom:5,
             marginBottom:10,
             display:"flex"
         },
@@ -153,7 +171,6 @@ function StarredScreen({navigation}) {
             marginTop:10,
             marginBottom:10,
             marginLeft:10,
-            // alignItems: "flex-end"
         },
 
     })
@@ -161,10 +178,12 @@ function StarredScreen({navigation}) {
     return (
 
 
-        <View style={{ flex: 1, /*alignItems: 'center',justifyContent: 'center',*/ backgroundColor:'#fff'}}>
-            <Text style={styles.titlePage}>Your starred subjects </Text>
-            <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
-            />
+        <View style={{ flex: 1,  backgroundColor:'#fff'}}>
+            <TouchableOpacity activeOpacity={1} onPress={fetchSubjectsagain}>
+                <Text style={styles.titlePage}>Your starred subjects </Text>
+                <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
+                />
+            </TouchableOpacity>
         </View>
     );
 }
