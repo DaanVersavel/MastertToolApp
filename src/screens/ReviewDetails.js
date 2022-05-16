@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import axios from "axios";
 import {Ionicons} from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
 
 function ReviewDetails({ route, navigation }){
     const { itemId } = route.params;
@@ -9,12 +10,14 @@ function ReviewDetails({ route, navigation }){
 
 
     useEffect(() => {
+
         const fetchSubject = async () => {
+            let token = await SecureStore.getItemAsync('access_token');
             var config = {
                 method: 'get',
                 url: `https://masterprooftoolbackend.herokuapp.com/Subjects/${itemId}`,
                 headers: {
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM'
+                    'Authorization': `Bearer ${token}`
                 }
             };
 

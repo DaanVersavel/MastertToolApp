@@ -22,17 +22,21 @@ function StarredScreen({navigation}) {
 
 
 
+
     useEffect(() => {
         console.log(SecureStore.getItemAsync("accesstoken"))
 
         const fetchSubjects = async () => {
+            let token = await SecureStore.getItemAsync('access_token');
+
             var config = {
                 method: 'get',
                 url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
                 headers: {
-                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
+                    'Authorization': `Bearer ${token}`
                 }
             };
+            console.log(config)
 
             setLoading(true);
             try {
@@ -48,11 +52,12 @@ function StarredScreen({navigation}) {
     }, [])
 
     async function fetchSubjectsagain() {
+        let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'get',
             url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
             headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
+                'Authorization': `Bearer ${token}`
             }
         };
 
@@ -70,11 +75,12 @@ function StarredScreen({navigation}) {
 
 
     async function removeStarred (subjectid)  {
+        let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'put',
             url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredRemove/${subjectid}`,
             headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
+                'Authorization': `Bearer ${token}`
             }
         };
 
@@ -117,7 +123,6 @@ function StarredScreen({navigation}) {
                         <Text style={styles.description}> <Ionicons name="person-outline" size={20}  /> {item.promotor.firstName } {item.promotor.surname}</Text>
                         <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
                         <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
-
 
                     </Card>
                 </TouchableOpacity>

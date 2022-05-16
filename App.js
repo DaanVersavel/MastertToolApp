@@ -7,6 +7,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import AppStack from "./src/components/navigation/AppStack";
 import AuthStack from "./src/components/navigation/AuthStack";
 import {useEffect, useState} from "react";
+import LoginScreen from "./src/screens/LoginScreen";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 
 
@@ -35,23 +37,32 @@ import {useEffect, useState} from "react";
 
 
 
-
 function App() {
-     const [signedIn, setsignedIn] = useState(false);
+     // const [signedIn, setsignedIn] = useState(false);
+
+    const Stack = createNativeStackNavigator();
 
     return (
         <NavigationContainer>
-            {signedIn ? (
-                //if  sigend in render
-                <AppStack/>
-                // <AuthStack/>
+            {/*{signedin ? (*/}
+            {/*    //if  sigend in render*/}
+            {/*    <AppStack />*/}
+            {/*    // <AuthStack/>*/}
 
-                ): (
-                //user
-                <AuthStack/>//wit
-                 // <AppStack />
+            {/*    ): (*/}
+            {/*    //user*/}
+            {/*    //<AuthStack oke={signedInTrue} />//wit*/}
+            {/*    <LoginScreen />*/}
+            {/*     // <AppStack />*/}
 
-            )}
+            {/*)}*/}
+            <Stack.Navigator initialRouteName="Login" screenOptions={{headerStyle: {backgroundColor:'#54BCEB'},}}>
+
+                <Stack.Screen name="Login" component={LoginScreen} options ={{headerShown:true}} />
+                <Stack.Screen name="AppStack" component={AppStack} options ={{headerShown:false}} />
+
+
+            </Stack.Navigator>
 
         </NavigationContainer>
     );

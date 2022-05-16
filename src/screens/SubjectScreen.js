@@ -6,6 +6,7 @@ import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {Swipeable} from "react-native-gesture-handler";
 import {Screen} from "react-native-screens";
+import * as SecureStore from "expo-secure-store";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,11 +45,12 @@ function SubjectScreen({navigation}) {
      ////, [])
 
      async function fetchSubjectsagain() {
+         let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'get',
             url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2MzA2MzF9.amu0Y2LcMxUxLiSdPXQO7h60dwoAUaQ-P-q5VE6lrm8'
+                'Authorization': `Bearer ${token}`
             }
         };
 
@@ -66,11 +68,12 @@ function SubjectScreen({navigation}) {
 
     async function putStarred (subjectid)  {
         // console.log(subjectid)
+        let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'put',
             url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredSave/${subjectid}`,
             headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2MzA2MzF9.amu0Y2LcMxUxLiSdPXQO7h60dwoAUaQ-P-q5VE6lrm8'
+                'Authorization': `Bearer ${token}`
             }
         };
 
