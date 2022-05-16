@@ -20,29 +20,8 @@ function SubjectScreen({navigation}) {
 
 
 
-     useEffect(/*() => {*/
-        fetchSubjectsagain)
-        // const fetchSubjects = async () => {
-        //     var config = {
-        //         method: 'get',
-        //         url: 'https://masterprooftoolbackend.herokuapp.com/Subjects',
-        //         headers: {
-        //             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2MzA2MzF9.amu0Y2LcMxUxLiSdPXQO7h60dwoAUaQ-P-q5VE6lrm8'
-        //         }
-        //     };
-        //
-        //     setLoading(true);
-        //     try {
-        //         const {data: response} = await axios(config);
-        //         setSubjects(response);
-        //     } catch (error) {
-        //         console.error(error.message);
-        //     }
-        //     setLoading(false);
-        // }
-        // fetchSubjects()
+     useEffect(fetchSubjectsagain)
 
-     ////, [])
 
      async function fetchSubjectsagain() {
          let token = await SecureStore.getItemAsync('access_token');
@@ -67,7 +46,6 @@ function SubjectScreen({navigation}) {
 
 
     async function putStarred (subjectid)  {
-        // console.log(subjectid)
         let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'put',
@@ -91,11 +69,7 @@ function SubjectScreen({navigation}) {
 
 
     function  RightActions (subjectid){
-        // const scale = dragX.interpolate({
-        //     inputRange:[-100,0],
-        //     outputRange: [1,0]
-        //
-        // })
+
 
         return (
             <TouchableOpacity style={styles.touchable} onPress={() =>putStarred(subjectid)}>

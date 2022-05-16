@@ -3,16 +3,13 @@ import Card from "../components/SubjectCard"
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons } from "@expo/vector-icons";
-import ReviewDetails from "./ReviewDetails";
 import {Swipeable} from "react-native-gesture-handler";
 import async from "async";
-// import SecureStorage from "react-native-secure-storage";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {stringify} from "qs";
 import * as SecureStore from 'expo-secure-store';
 
 
-// SecureStore.setItemAsync("accesstoken",JSON.stringify( "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM"))
 
 
 function StarredScreen({navigation}) {
@@ -21,35 +18,9 @@ function StarredScreen({navigation}) {
 
 
 
+    useEffect(fetchSubjectsagain)
 
 
-    useEffect(() => {
-        console.log(SecureStore.getItemAsync("accesstoken"))
-
-        const fetchSubjects = async () => {
-            let token = await SecureStore.getItemAsync('access_token');
-
-            var config = {
-                method: 'get',
-                url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            };
-            console.log(config)
-
-            setLoading(true);
-            try {
-                const {data: response} = await axios(config);
-                setSubjects(response);
-            } catch (error) {
-                console.error(error.message);
-            }
-            setLoading(false);
-        }
-        fetchSubjects()
-
-    }, [])
 
     async function fetchSubjectsagain() {
         let token = await SecureStore.getItemAsync('access_token');

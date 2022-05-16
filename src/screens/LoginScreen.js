@@ -25,7 +25,6 @@ function LoginScreen ({navigation}) {
         var config = {
             method: 'post',
             url: 'https://masterprooftoolbackend.herokuapp.com/login',
-            //url: 'http://localhost:8080/login',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -34,23 +33,13 @@ function LoginScreen ({navigation}) {
 
         axios(config)
             .then((response) => {
-                //console.log(response)
-                console.log("access_token : response.data.access_token ", response.data.access_token )
-                // SecureStore.setItemAsync('access_token', JSON.stringify(response.data.access_token))
-                // console.log("access_token : JSON ", JSON.stringify(response.data.access_token))
                 SecureStore.setItemAsync("access_token", response.data.access_token)
-                // // SecureStorage.setItem('access_token', JSON.stringify(response.data.access_token))
-                // console.log(qs.stringify( SecureStore.getItemAsync('access_token')))
-                // console.log(SecureStorage.getItem('access_token'))
+                SecureStore.setItemAsync("refresh_token", response.data.refresh_token)
                 navigation.navigate(AppStack)
-                // console.log(signedin)
             })
             .catch(error => {
                 console.log(error)
                 console.log(error.stack)
-                console.log("email" ,email)
-                console.log("password" ,password)
-                console.log("foutje")
             })
     }
 
