@@ -3,16 +3,11 @@ import Card from "../components/SubjectCard"
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Ionicons, MaterialIcons } from "@expo/vector-icons";
-import ReviewDetails from "./ReviewDetails";
 import {Swipeable} from "react-native-gesture-handler";
-import async from "async";
-// import SecureStorage from "react-native-secure-storage";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-import {stringify} from "qs";
+
 import * as SecureStore from 'expo-secure-store';
 
 
-// SecureStore.setItemAsync("accesstoken",JSON.stringify( "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM"))
 
 
 function StarredScreen({navigation}) {
@@ -20,39 +15,40 @@ function StarredScreen({navigation}) {
     const [subjects, setSubjects] = useState([]);
 
 
-
-
     useEffect(() => {
-        console.log(SecureStore.getItemAsync("accesstoken"))
 
-        const fetchSubjects = async () => {
-            var config = {
-                method: 'get',
-                url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
-                headers: {
-                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
-                }
-            };
-
-            setLoading(true);
-            try {
-                const {data: response} = await axios(config);
-                setSubjects(response);
-            } catch (error) {
-                console.error(error.message);
-            }
-            setLoading(false);
-        }
-        fetchSubjects()
-
-    }, [])
-
-    async function fetchSubjectsagain() {
+    const fetchSubjects = async () => {
+        let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'get',
             url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
             headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        setLoading(true);
+        try {
+            const {data: response} = await axios(config);
+            setSubjects(response);
+        } catch (error) {
+            console.error(error.message);
+        }
+        setLoading(false);
+    }
+    fetchSubjects()
+
+    }, [])
+
+
+
+    async function fetchSubjectsagain() {
+        let token = await SecureStore.getItemAsync('access_token');
+        var config = {
+            method: 'get',
+            url: 'https://masterprooftoolbackend.herokuapp.com/Student/Starred',
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
         };
 
@@ -70,11 +66,12 @@ function StarredScreen({navigation}) {
 
 
     async function removeStarred (subjectid)  {
+        let token = await SecureStore.getItemAsync('access_token');
         var config = {
             method: 'put',
             url: `https://masterprooftoolbackend.herokuapp.com/Student/StarredRemove/${subjectid}`,
             headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3R0ZUBnbWFpbC5jb20iLCJyb2xlcyI6WyJST0xFX1NUVURFTlQiXSwiaXNzIjoiaHR0cHM6Ly9tYXN0ZXJwcm9vZnRvb2xiYWNrZW5kLmhlcm9rdWFwcC5jb20vbG9naW4iLCJleHAiOjE2NTI2NDE1NDh9.WhAzbrRAWrobUubEOwf2t1-wWrk-kZ9YxJIB8rgE9NM`
+                'Authorization': `Bearer ${token}`
             }
         };
 
@@ -118,7 +115,6 @@ function StarredScreen({navigation}) {
                         <Text style={styles.description}> <Ionicons name="map-outline" size={20}  /> {item.campussen[0].name}</Text>
                         <Text style={styles.description}> <Ionicons name="people-outline" size={20}  /> {item.astudents}</Text>
 
-
                     </Card>
                 </TouchableOpacity>
             </Swipeable>
@@ -134,9 +130,7 @@ function StarredScreen({navigation}) {
             marginBottom:10
         },
         description:{
-            //fontWeight: "bold",
             fontSize: 17,
-            // paddingBottom:5,
             marginBottom:10,
             display:"flex"
         },
@@ -177,7 +171,6 @@ function StarredScreen({navigation}) {
             marginTop:10,
             marginBottom:10,
             marginLeft:10,
-            // alignItems: "flex-end"
         },
 
     })
@@ -185,10 +178,12 @@ function StarredScreen({navigation}) {
     return (
 
 
-        <View style={{ flex: 1, /*alignItems: 'center',justifyContent: 'center',*/ backgroundColor:'#fff'}}>
-            <Text style={styles.titlePage}>Your starred subjects </Text>
-            <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
-            />
+        <View style={{ flex: 1,  backgroundColor:'#fff'}}>
+            <TouchableOpacity activeOpacity={1} onPress={fetchSubjectsagain}>
+                <Text style={styles.titlePage}>Your starred subjects </Text>
+                <FlatList data={subjects} renderItem={renderItem} keyExtractor={item => item.id}
+                />
+            </TouchableOpacity>
         </View>
     );
 }
